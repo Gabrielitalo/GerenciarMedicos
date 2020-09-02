@@ -79,7 +79,7 @@ Foram utilizados os seguintes pacotes nugets, demais referências são nativas d
 
 Será criado uma API que irá conter os seguintes endpoints, esta deverá ter uma hospedagem que forneça suporte a .NET.
 
-- Consultórios
+** Consultórios**
 
 - Criar consultório [POST]
 
@@ -89,7 +89,7 @@ Será criado uma API que irá conter os seguintes endpoints, esta deverá ter um
 
 - Alterar [PUT]
 
-- Médicos
+** Médicos**
 
 - Criar consultório [POST]
 
