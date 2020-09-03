@@ -100,3 +100,24 @@ Será criado uma API que irá conter os seguintes endpoints, esta deverá ter um
 - Alterar [PUT]
 
 - DesvinculaMedicoConsultorio[DELETE]
+
+***Interface com usuário***
+
+A interface com o usuário irá conter 4 formulários, sendo:
+
+ **- Login**
+    - Onde o usuário irá acessar com os dados de acesso para serem validados
+    no banco de dados, para poder acessar a plataforma.
+    
+ **- Início**
+    - Onde há algumas informações para o usuário
+    
+ **- Central de consultórios**
+    - Onde o usuário poderá gerenciar os consultórios cadastrados, atualizando valores, 
+    apagar o consultório.
+    
+ **- Central de médicos**
+    - Onde o usuário irá gerenciar os médicos, podendo vincula-los aos consultórios,
+    cada médico pode existir em no máximo dois consultórios.
+    
+  Os arquivos estão neste repositório com o nome: **"UI"**
