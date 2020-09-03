@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Gerenciar Médicos</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+
+    <!-- Vendor CSS Files -->
+    <link href="files/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="files/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="files/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="files/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="files/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="files/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="files/css/custom.css" rel="stylesheet">
+    <!-- Importando icones -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#"><i class="fa fa-home"></i> Início</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-link" href="centralConsultorios.html"><i class="fa fa-heartbeat"></i> Consultórios</a>
+                    <a class="nav-link" href="centralMedicos.html"><i class="fa fa-user"></i> Médicos</a>
+                </div>
+            </div>
+        </nav>
+
+        <nav class="mt-2" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page">Central de médicos</li>
+            </ol>
+        </nav>
+
+        <div class="mt-2 row col">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-link"><i class="fa fa-plus"></i> Adicionar</button>
+                <button type="button" class="btn btn-link"><i class="fa fa-eye"></i> Filtros</button>
+            </div>
+        </div>
+        <div class="mt-2">
+            <div class="col-12">
+                <div class="row">
+                    <div class="ml-2 mb-2 card custom-card">
+                        <div class="card-body">
+                            <div class="row col">
+                                <a href="#" class="card-link"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="card-link" data-toggle="modal" data-target="#modalEdit"><i
+                                        class="fa fa-search"></i></a>
+                                <h5 class="ml-2 card-title">Nome médicos</h5>
+                            </div>
+                            <p class="card-text"><i class="fa fa-certificate"></i> CRM: 0000565155</p>
+                            <p class="card-text"><i class="fa fa-phone"></i> 37 98854-5038</p>
+                            <p class="card-text"><i class="fa fa-credit-card"></i> 150,50</p>
+                        </div>
+                    </div>
+                    <div class="ml-2 mb-2 card custom-card">
+                        <div class="card-body">
+                            <div class="row col">
+                                <a href="#" class="card-link"><i class="fa fa-trash"></i></a>
+                                <a href="#" class="card-link" data-toggle="modal" data-target="#modalEdit"><i
+                                        class="fa fa-search"></i></a>
+                                <h5 class="ml-2 card-title">Nome médicos</h5>
+                            </div>
+                            <p class="card-text"><i class="fa fa-certificate"></i> CRM: 0000565155</p>
+                            <p class="card-text"><i class="fa fa-phone"></i> 37 98854-5038</p>
+                            <p class="card-text"><i class="fa fa-credit-card"></i> 150,50</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Edição médicos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body custom-input">
+                    <div class="form-group">
+                        <label class="custom-input-label text-muted" for="txtNomeMedico" maxlength="100">Nome</label>
+                        <input type="text" class="form-control" id="txtNomeMedico"
+                            placeholder="Digite aqui o nome do médico">
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-input-label text-muted" for="txtCrm">CRM</label>
+                        <input type="text" class="form-control" id="txtCrm" maxlength="10"
+                            placeholder="Digite aqui o CRM do médico">
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-input-label text-muted" for="txtTelefone" maxlength="20">Telefone</label>
+                        <input type="text" class="form-control" id="txtTelefone"
+                            placeholder="Digite aqui o telefone do médico">
+                    </div>
+                    <div class="form-group">
+                        <label class="custom-input-label text-muted" for="txtVrConsulta">Valor consulta</label>
+                        <input type="number" class="form-control" id="txtVrConsulta"
+                            placeholder="Digite aqui o valor da consulta do médico">
+                    </div>
+
+                    <div class="mt-2">
+                        <div class="form-group">
+                            <label class="custom-input-label text-muted" for="txtConsultorio1">Consultório 1</label>
+                            <input type="text" class="form-control" id="txtConsultorio1"
+                                placeholder="Vincular médico a um consultório">
+                        </div>
+                        <div class="form-group">
+                            <label class="custom-input-label text-muted" for="txtConsultorio2">Consultório 2</label>
+                            <input type="text" class="form-control" id="txtConsultorio2"
+                                placeholder="Vincular médico a um consultório">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                </div>
+
+                <input type="hidden" id="pkConsultorio"/>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Framework-->
+    <script src="files/vendor/jquery/jquery.min.js"></script>
+    <script src="files/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="files/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="files/vendor/php-email-form/validate.js"></script>
+    <script src="files/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="files/vendor/counterup/counterup.min.js"></script>
+    <script src="files/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="files/vendor/venobox/venobox.min.js"></script>
+    <script src="files/vendor/owl.carousel/owl.carousel.min.js"></script>
+</body>
+
+</html>

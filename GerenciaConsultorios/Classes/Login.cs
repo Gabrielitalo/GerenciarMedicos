@@ -19,6 +19,39 @@ namespace GerenciaConsultorios.Classes
     private MySqlDataAdapter mAdapter;
     DbCon con = new DbCon();
 
+    public string validaLogin(string username, string pass)
+    {
+      string Retorno = "";
+      string comando = "Select * From CadUsuarios Where (Usuario = " + username + ") and (Senha = " + pass + ");";
+      DataSet ds = new DataSet();
+      List<Login> login = new List<Login>();
+
+      // Executando comando
+      mAdapter = new MySqlDataAdapter(comando, con.connectionStringMySql);
+      // Populando o data set
+      mAdapter.Fill(ds);
+
+      if (ds.Tables[0].Rows.Count > 0)
+      {
+        login.Add
+            (
+              new Login
+              {
+                Pk = Convert.ToInt32(ds.Tables[0].Rows[0]["Pk"]),
+                Nome = ds.Tables[0].Rows[0]["Nome"].ToString(),
+                Usuario = ds.Tables[0].Rows[0]["Usuario"].ToString(),
+                TipoUsuario = Convert.ToInt32(ds.Tables[0].Rows[0]["TipoUsuario"].ToString())
+              }
+            );
+        Retorno = JsonConvert.SerializeObject(login, Formatting.Indented);
+      }
+      else
+      {
+        Retorno = "Não encontrado";
+      }
+
+        return Retorno;
+    }
 
     public string retornarUsuarios(int tipo, int pkUsuario = 0)
     {
@@ -52,7 +85,6 @@ namespace GerenciaConsultorios.Classes
                 Pk = Convert.ToInt32(ds.Tables[0].Rows[i]["Pk"]),
                 Nome = ds.Tables[0].Rows[i]["Nome"].ToString(),
                 Usuario = ds.Tables[0].Rows[i]["Usuario"].ToString(),
-                Senha = ds.Tables[0].Rows[i]["Senha"].ToString(),
                 TipoUsuario = Convert.ToInt32(ds.Tables[0].Rows[i]["TipoUsuario"].ToString())
               }
               );

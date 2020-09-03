@@ -191,3 +191,7 @@ C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciaConsultorios\obj\
 C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.dll
 C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.pdb
 C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.csprojAssemblyReference.cache
+C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciarMedicos\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.csprojAssemblyReference.cache
+C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciarMedicos\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.csproj.CoreCompileInputs.cache
+C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciarMedicos\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.dll
+C:\Users\Jessica\Desktop\Projects\GerenciaConsultorios\GerenciarMedicos\GerenciaConsultorios\obj\Debug\GerenciaConsultorios.pdb

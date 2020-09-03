@@ -23,6 +23,13 @@ namespace GerenciaConsultorios.Controllers
     //---------------------------------------------------------------------------------------------------------------------------------------
     // Login
     [AcceptVerbs("GET")]
+    [Route("api/ValidaLogin")]
+    public string validaLogin(string username, string pass)
+    {
+      return login.validaLogin(username, pass);
+    }
+
+    [AcceptVerbs("GET")]
     [Route("api/RetornarUsuarios")]
     public string retornarUsuarios(int tipo, int pkUsuario)
     {
