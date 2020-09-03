@@ -59,7 +59,7 @@ namespace GerenciaConsultorios.Classes.MedicoData
     }
 
     // Retorna todos médicos, único médico ou vinculados a determinado consultório.
-    public string retornarMedicos(int tipo, int pkMedico = 0, int pkConsultorio = 0)
+    public List<Medicos> retornarMedicos(int tipo, int pkMedico = 0, int pkConsultorio = 0)
     {
       List<Medicos> medicos = new List<Medicos>();
       string comando = "";
@@ -76,7 +76,7 @@ namespace GerenciaConsultorios.Classes.MedicoData
           // Retorna médicos pelo código 
           comando = @"Select * 
                       From CadMedicos M
-                      Join MovMedicos Mm on (Mm.FkCadMedicos = M.Pk)
+                      Left Join MovMedicos Mm on (Mm.FkCadMedicos = M.Pk)
                       Where (M.Pk = " + pkMedico.ToString() + ")";
         }
         else if (pkConsultorio != 0)
@@ -107,11 +107,11 @@ namespace GerenciaConsultorios.Classes.MedicoData
             (
               new Medicos
               {
-                Pk = Convert.ToInt32(ds.Tables[0].Rows[0]["Pk"]),
-                Crm = ds.Tables[0].Rows[0]["Crm"].ToString(),
-                Nome = ds.Tables[0].Rows[0]["Nome"].ToString(),
-                Telefone = ds.Tables[0].Rows[0]["Telefone"].ToString(),
-                ValorConsulta = Convert.ToDecimal(ds.Tables[0].Rows[0]["ValorConsulta"].ToString())
+                Pk = Convert.ToInt32(ds.Tables[0].Rows[i]["Pk"]),
+                Crm = ds.Tables[0].Rows[i]["Crm"].ToString(),
+                Nome = ds.Tables[0].Rows[i]["Nome"].ToString(),
+                Telefone = ds.Tables[0].Rows[i]["Telefone"].ToString(),
+                ValorConsulta = Convert.ToDecimal(ds.Tables[0].Rows[i]["ValorConsulta"].ToString())
 
               }
             );
@@ -121,7 +121,7 @@ namespace GerenciaConsultorios.Classes.MedicoData
       catch
       {
       }
-      return JsonConvert.SerializeObject(medicos, Formatting.Indented);
+      return medicos;
 
     }
 

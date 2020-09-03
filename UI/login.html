@@ -8,6 +8,9 @@
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
 
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Vendor CSS Files -->
     <link href="files/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="files/vendor/icofont/icofont.min.css" rel="stylesheet">
@@ -47,14 +50,25 @@
                 </div>
 
                 <div class="row col">
-                    <button type="button" class="ml-3 btn btn-login btn-outline-success">Acessar painel</button>
+                    <button type="button" class="ml-3 btn btn-login btn-outline-success"
+                        onclick="validaLogin();">Acessar painel</button>
                 </div>
-            <hr>
+
+                <div class="mt-2 col">
+                    <div class="d-none alert alert-danger" id="lbResultado" role="alert">
+                        Usuário ou senha incorretos, digite novamente.
+                    </div>
+                </div>
+                <hr>
             </div>
 
 
         </div>
     </div>
+
+    <!-- Para essa página -->
+    <script src="files/js/login.js"></script>
+
 </body>
 
 </html>

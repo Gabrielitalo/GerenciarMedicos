@@ -52,7 +52,7 @@ namespace GerenciaConsultorios.Classes
     }
 
     // Retorna os dados dos consultórios todos ou apenas um
-    public string retornarConsultorios(int tipo, int pkConsultorio = 0)
+    public List<Consultorio> retornarConsultorios(int tipo, int pkConsultorio = 0)
     {
       List<Consultorio> consultorio = new List<Consultorio>();
       string comando = "";
@@ -102,7 +102,7 @@ namespace GerenciaConsultorios.Classes
       {
 
       }
-      return JsonConvert.SerializeObject(consultorio, Formatting.Indented);
+      return consultorio;
 
     }
 

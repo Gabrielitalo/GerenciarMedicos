@@ -19,10 +19,9 @@ namespace GerenciaConsultorios.Classes
     private MySqlDataAdapter mAdapter;
     DbCon con = new DbCon();
 
-    public string validaLogin(string username, string pass)
+    public List<Login> validaLogin(string username, string pass)
     {
-      string Retorno = "";
-      string comando = "Select * From CadUsuarios Where (Usuario = " + username + ") and (Senha = " + pass + ");";
+      string comando = "Select * From CadUsuarios Where (Usuario = '" + username + "') and (Senha = '" + pass + "');";
       DataSet ds = new DataSet();
       List<Login> login = new List<Login>();
 
@@ -43,14 +42,13 @@ namespace GerenciaConsultorios.Classes
                 TipoUsuario = Convert.ToInt32(ds.Tables[0].Rows[0]["TipoUsuario"].ToString())
               }
             );
-        Retorno = JsonConvert.SerializeObject(login, Formatting.Indented);
       }
       else
       {
-        Retorno = "Não encontrado";
+        login.Add(new Login { Pk = 0 }); // Não achou
       }
 
-        return Retorno;
+        return login;
     }
 
     public string retornarUsuarios(int tipo, int pkUsuario = 0)

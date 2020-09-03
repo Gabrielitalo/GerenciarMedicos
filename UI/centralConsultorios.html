@@ -4,9 +4,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>Gerenciar Médicos</title>
+    <title>Consultórios</title>
     <meta content="" name="descriptison">
     <meta content="" name="keywords">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Vendor CSS Files -->
     <link href="files/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -23,48 +25,40 @@
 </head>
 
 <body>
-    <div class="container">
-        <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#"><i class="fa fa-home"></i> Início</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-link" href="centralConsultorios.html"><i class="fa fa-heartbeat"></i> Consultórios</a>
-                    <a class="nav-link" href="centralMedicos.html"><i class="fa fa-user"></i> Médicos</a>
-                </div>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html"><i class="fa fa-home"></i> Início</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="centralConsultorios.html"><i class="fa fa-heartbeat"></i> Consultórios</a>
+                <a class="nav-link" href="centralMedicos.html"><i class="fa fa-user"></i> Médicos</a>
+                <a class="nav-link" href="centralMedicos.html" onclick="fazerLogout();"><i class="fa fa-power-off"></i>
+                    Sair</a>
             </div>
-        </nav>
-
+        </div>
+    </nav>
+    <div class="container-fluid">
         <nav class="mt-2" aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active" aria-current="page">Central de consultórios</li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <h5>Central de consultórios</h5>
+                </li>
             </ol>
         </nav>
 
         <div class="mt-2 row col">
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-link"><i class="fa fa-plus"></i> Adicionar</button>
+                <button type="button" class="btn btn-link" onclick="abrirModal('modalEdit');"><i class="fa fa-plus"></i>
+                    Adicionar</button>
                 <button type="button" class="btn btn-link"><i class="fa fa-eye"></i> Filtros</button>
             </div>
         </div>
         <div class="mt-2">
             <div class="col-12">
-                <div class="row">
-                    <div class="ml-2 mb-2 card custom-card">
-                        <div class="card-body">
-                            <div class="row col">
-                                <a href="#" class="card-link"><i class="fa fa-trash"></i></a>
-                                <a href="#" class="card-link" data-toggle="modal" data-target="#modalEdit"><i
-                                        class="fa fa-search"></i></a>
-                                <h5 class="ml-2 card-title">Nome consultório</h5>
-                            </div>
-                            <p class="card-text"><i class="fa fa-envelope-square"></i> Rua Xavante, 460, Manoel Valinhas</p>
-                            <p class="card-text"><i class="fa fa-phone"></i> 37 98854-5038</p>
-                        </div>
-                    </div>
+                <div class="row" id="liveRow">
                 </div>
             </div>
         </div>
@@ -98,11 +92,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Salvar</button>
+                    <button type="button" class="btn btn-success" onclick="salvar();">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
                 </div>
 
-                <input type="hidden" id="pkConsultorio"/>
+                <input type="hidden" id="pkConsultorio" />
             </div>
         </div>
     </div>
@@ -117,6 +111,10 @@
     <script src="files/vendor/isotope-layout/isotope.pkgd.min.js"></script>
     <script src="files/vendor/venobox/venobox.min.js"></script>
     <script src="files/vendor/owl.carousel/owl.carousel.min.js"></script>
+
+    <!-- Para essa página -->
+    <script src="files/js/gerenciarConsultorios.js"></script>
+
 </body>
 
 </html>

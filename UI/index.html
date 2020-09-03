@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Consultórios</title>
+    <meta content="" name="descriptison">
+    <meta content="" name="keywords">
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Vendor CSS Files -->
+    <link href="files/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="files/vendor/icofont/icofont.min.css" rel="stylesheet">
+    <link href="files/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="files/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="files/vendor/venobox/venobox.css" rel="stylesheet">
+    <link href="files/vendor/owl.carousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Template Main CSS File -->
+    <link href="files/css/custom.css" rel="stylesheet">
+    <!-- Importando icones -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+</head>
+
+<body>
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="index.html"><i class="fa fa-home"></i> Início</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="centralConsultorios.html"><i class="fa fa-heartbeat"></i> Consultórios</a>
+                <a class="nav-link" href="centralMedicos.html"><i class="fa fa-user"></i> Médicos</a>
+                <a class="nav-link" href="centralMedicos.html"><i class="fa fa-power-off"></i> Sair</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="jumbotron mt-3">
+            <h1 class="display-4">Gerenciar</h1>
+            <p class="lead">Esta é uma plataforma que permite gerenciar um consultório e os médicos que atendem.</p>
+            <hr class="my-4">
+            <p>Será possível saber:</p>
+            <ul class="list-group">
+                <li class="list-group-item">Os consultórios cadastrados.</li>
+                <li class="list-group-item">Os médicos cadastrados.</li>
+                <li class="list-group-item">Em quais consultórios um médico atende.</li>
+                <li class="list-group-item">Valor da consulta por médico.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap Framework-->
+    <script src="files/vendor/jquery/jquery.min.js"></script>
+    <script src="files/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="files/vendor/jquery.easing/jquery.easing.min.js"></script>
+    <script src="files/vendor/php-email-form/validate.js"></script>
+    <script src="files/vendor/waypoints/jquery.waypoints.min.js"></script>
+    <script src="files/vendor/counterup/counterup.min.js"></script>
+    <script src="files/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="files/vendor/venobox/venobox.min.js"></script>
+    <script src="files/vendor/owl.carousel/owl.carousel.min.js"></script>
+
+    <script>
+        function verificaLogin() {
+            let statusLogin = sessionStorage.getItem("Login");
+
+            if (statusLogin !== "Sucesso") {
+                window.location.href = "login.html";
+            }
+        }
+        //--------------------------------------------------------------------------------------------------------------------------------------------
+        function fazerLogout() {
+            sessionStorage.removeItem("Login");
+            verificaLogin();
+        }
+
+        $(document).ready(function () {
+            verificaLogin();
+        });
+    </script>
+</body>
+
+</html>
