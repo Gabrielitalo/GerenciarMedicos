@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal Editar -->
     <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -95,7 +95,7 @@
                             placeholder="Digite aqui o valor da consulta do médico">
                     </div>
 
-                    <div class="mt-2">
+                    <!-- <div class="mt-2">
                         <div class="form-group">
                             <label class="custom-input-label text-muted" for="txtConsultorio1">Consultório 1</label>
                             <input type="text" class="form-control" id="txtConsultorio1"
@@ -106,7 +106,7 @@
                             <input type="text" class="form-control" id="txtConsultorio2"
                                 placeholder="Vincular médico a um consultório">
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" onclick="salvar();">Salvar</button>
@@ -114,6 +114,49 @@
                 </div>
 
                 <input type="hidden" id="pkMedico" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal vincular médico-->
+    <div class="modal fade" id="modalVincular" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalEditLabel">Vincular médico a consultório</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body custom-input">
+                    <div class="mt-2">
+                        <div class="form-group">
+                            <label class="custom-input-label text-muted" for="txtNomeMedicoVincula" maxlength="100">Nome
+                                do médico</label>
+                            <input type="text" class="form-control" id="txtNomeMedicoVincula" disabled>
+                        </div>
+                        <div class="form-group">
+                            <button for="txtConsultorio1" class="btn btn-sm btn-link custom-input-label text-muted" onclick="excluirVinculo('1');"><i
+                                    class="fa fa-trash"></i> Consultório 1</button>
+                            <input type="text" class="form-control" id="txtConsultorio1"
+                                placeholder="Vincular médico a um consultório" />
+                            <input type="hidden" id="pkConsultorio1" />
+                        </div>
+                        <div class="form-group">
+                            <button for="txtConsultorio2" class="btn btn-sm btn-link custom-input-label text-muted" onclick="excluirVinculo('2');"><i
+                                    class="fa fa-trash"></i> Consultório 2</button>
+                            <input type="text" class="form-control" id="txtConsultorio2"
+                                placeholder="Vincular médico a um consultório">
+                            <input type="hidden" id="pkConsultorio2" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="salvar();">Salvar</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                </div>
+
+                <input type="hidden" id="pkMedicoVincula" />
             </div>
         </div>
     </div>

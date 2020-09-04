@@ -61,7 +61,8 @@ function retornaMedicos() {
                 html += '<h5 class="ml-2 card-title"> ' + obj[i].Nome + '</h5></div>';
                 html += '<p class="card-text"><i class="fa fa-certificate"></i> ' + obj[i].Crm + '</p>';
                 html += '<p class="card-text"><i class="fa fa-phone"></i> ' + obj[i].Telefone + '</p>';
-                html += '<p class="card-text"><i class="fa fa-credit-card"></i> ' + obj[i].ValorConsulta + '</p></div></div>';
+                html += '<p class="card-text"><i class="fa fa-credit-card"></i> ' + obj[i].ValorConsulta + '</p>';
+                html += '<a href="#" class="card-link" onclick="abrirVincularMedico(' + concatenaHtml(obj[i].Pk) + ');"><i class="fa fa-users"></i> Vincular consultório</a></div></div>';
 
             }
             liveRow.innerHTML = html;
@@ -82,7 +83,7 @@ function apagarMedico(pk) {
     });
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------
-// Detalhes consultório
+// Detalhes médico
 
 function abrirDetalhesMedico(pk) {
     limparModal();
@@ -161,4 +162,93 @@ function salvar() {
     }
     // Está com o toogle
     abrirModal('modalEdit', 'não');
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// Ver médico consultório
+
+function abrirVincularMedico(pk) {
+    limparModal();
+    $.ajax({
+        url: urlAPI + "api/RetornaMedicos",
+        data: {
+            tipo: 2,
+            pkMedico: pk
+        },
+        dataType: "text",
+        method: "GET",
+        success: function (data) {
+            var obj = JSON.parse(data);
+            if (obj.length > 0) {
+                document.getElementById("pkMedicoVincula").value = obj[0].Pk;
+
+                document.getElementById("txtNomeMedicoVincula").value = obj[0].Nome;
+                document.getElementById("txtConsultorio1").value = obj[0].NomeConsultorio;
+                document.getElementById("pkConsultorio1").value = obj[0].PkMovMedico;
+
+                if (obj.length > 1) {
+                    document.getElementById("txtConsultorio2").value = obj[1].NomeConsultorio;
+                    document.getElementById("pkConsultorio2").value = obj[1].PkMovMedico;
+                }
+
+
+                abrirModal('modalVincular', 'não');
+            }
+
+        }
+    });
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// Vincular médico consultório
+
+function salvarVinculo() {
+    let pkMovMedico, pkMedico, pkConsultorio;
+
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// cadastar vinculo médico com o consultório
+function cadastrarVinculo(pkMovMedico, pkMedico, pkConsultorio){
+
+    if(!pkMovMedico){
+        pkMovMedico = 0;
+    }
+
+    if (pkMedico && pkConsultorio) {
+        $.ajax({
+            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=0&pk=" + pkMovMedico + "&pkConsultorio=" + pkConsultorio + "&pkMedico=" + pkMedico,
+            dataType: "text",
+            method: "POST",
+            success: function (data) {
+            }
+        });
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// Excluir vinculo médico com o consultório
+
+function excluirVinculo(v) {
+    let Pk;
+    let txt;
+
+    if (v === "1") {
+        Pk = document.getElementById("pkConsultorio1")
+        txt = document.getElementById("txtConsultorio1");
+    } else {
+        Pk = document.getElementById("pkConsultorio2");
+        txt = document.getElementById("txtConsultorio2");
+    }
+
+    if (Pk) {
+        $.ajax({
+            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=1&pk=" + Pk.value,
+            dataType: "text",
+            method: "POST",
+            success: function (data) {
+                Pk.value = "";
+                txt.value = "";
+            }
+        });
+    }
+
 }

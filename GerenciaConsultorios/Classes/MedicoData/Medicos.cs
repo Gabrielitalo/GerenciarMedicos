@@ -59,9 +59,9 @@ namespace GerenciaConsultorios.Classes.MedicoData
     }
 
     // Retorna todos médicos, único médico ou vinculados a determinado consultório.
-    public List<Medicos> retornarMedicos(int tipo, int pkMedico = 0, int pkConsultorio = 0)
+    public List<MovMedicos> retornarMedicos(int tipo, int pkMedico = 0, int pkConsultorio = 0)
     {
-      List<Medicos> medicos = new List<Medicos>();
+      List<MovMedicos> movMedicos = new List<MovMedicos>();
       string comando = "";
       DataSet ds = new DataSet();
 
@@ -71,13 +71,20 @@ namespace GerenciaConsultorios.Classes.MedicoData
       }
       else
       {
-        if (pkMedico != 0)
+        if (tipo == 1 && pkMedico != 0)
         {
           // Retorna médicos pelo código 
-          comando = @"Select * 
+          comando = @"Select * From CadMedicos M Where (M.Pk = " + pkMedico.ToString() + ")";
+
+        }
+        else if (tipo == 2 && pkMedico != 0)
+        {
+          // Retornar médicos e seus vínculos 
+          comando = @"Select M.*, Mm.Pk as PkMovMedico, Mm.FkCadConsultorio, Mm.FkCadMedicos, C.Nome as NomeConsultorio
                       From CadMedicos M
                       Left Join MovMedicos Mm on (Mm.FkCadMedicos = M.Pk)
-                      Where (M.Pk = " + pkMedico.ToString() + ")";
+                      Left Join CadConsultorio C on (C.Pk = Mm.FkCadConsultorio)
+                      Where (M.Pk = " + pkMedico.ToString() + ") and (Mm.Pk is not null) Order by Mm.Pk Desc Limit 2";
         }
         else if (pkConsultorio != 0)
         {
@@ -103,25 +110,47 @@ namespace GerenciaConsultorios.Classes.MedicoData
           int i = 0;
           for (i = 0; i <= ds.Tables[0].Rows.Count; i++)
           {
-            medicos.Add
-            (
-              new Medicos
-              {
-                Pk = Convert.ToInt32(ds.Tables[0].Rows[i]["Pk"]),
-                Crm = ds.Tables[0].Rows[i]["Crm"].ToString(),
-                Nome = ds.Tables[0].Rows[i]["Nome"].ToString(),
-                Telefone = ds.Tables[0].Rows[i]["Telefone"].ToString(),
-                ValorConsulta = Convert.ToDecimal(ds.Tables[0].Rows[i]["ValorConsulta"].ToString())
+            if (tipo == 2)
+            {
+              movMedicos.Add
+              (
+                new MovMedicos
+                {
+                  Pk = Convert.ToInt32(ds.Tables[0].Rows[i]["Pk"]),
+                  Crm = ds.Tables[0].Rows[i]["Crm"].ToString(),
+                  Nome = ds.Tables[0].Rows[i]["Nome"].ToString(),
+                  Telefone = ds.Tables[0].Rows[i]["Telefone"].ToString(),
+                  ValorConsulta = Convert.ToDecimal(ds.Tables[0].Rows[i]["ValorConsulta"].ToString()),
+                  PkMovMedico = Convert.ToInt32(ds.Tables[0].Rows[i]["PkMovMedico"]),
+                  FkCadConsultorio = Convert.ToInt32(ds.Tables[0].Rows[i]["FkCadConsultorio"]),
+                  FkCadMedicos = Convert.ToInt32(ds.Tables[0].Rows[i]["FkCadMedicos"]),
+                  NomeConsultorio = ds.Tables[0].Rows[i]["NomeConsultorio"].ToString(),
+                }
+              );
+            }
+            else
+            {
+              movMedicos.Add
+              (
+                new MovMedicos
+                {
+                  Pk = Convert.ToInt32(ds.Tables[0].Rows[i]["Pk"]),
+                  Crm = ds.Tables[0].Rows[i]["Crm"].ToString(),
+                  Nome = ds.Tables[0].Rows[i]["Nome"].ToString(),
+                  Telefone = ds.Tables[0].Rows[i]["Telefone"].ToString(),
+                  ValorConsulta = Convert.ToDecimal(ds.Tables[0].Rows[i]["ValorConsulta"].ToString())
 
-              }
-            );
+                }
+              );
+            }
           }
         }
       }
-      catch
+      catch (Exception ex)
       {
+        ex.ToString();
       }
-      return medicos;
+      return movMedicos;
 
     }
 
@@ -189,13 +218,13 @@ namespace GerenciaConsultorios.Classes.MedicoData
     }
 
     // Gerencia em quais consultórios os médicos atendem, regra está toda na procedure
-    public string vincularMedicoConsultorio(int tipo, int pkConsultorio, int pkMedico)
+    public string vincularMedicoConsultorio(int tipo, int pkConsultorio, int pkMedico, int pk)
     {
       DataSet ds = new DataSet();
       string retorno = "";
       string comando;
 
-      comando = "call PcVinculaMedicoConsultorio (" + tipo + " , " + pkMedico + " , " + pkConsultorio + ")";
+      comando = "call PcVinculaMedicoConsultorio (" + tipo + " , " + pk + " , " + pkMedico + " , " + pkConsultorio + ")";
       // Executando comando
       mAdapter = new MySqlDataAdapter(comando, con.connectionStringMySql);
       // Populando o data set
