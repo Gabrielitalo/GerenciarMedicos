@@ -84,15 +84,15 @@ namespace GerenciaConsultorios.Classes.MedicoData
                       From CadMedicos M
                       Left Join MovMedicos Mm on (Mm.FkCadMedicos = M.Pk)
                       Left Join CadConsultorio C on (C.Pk = Mm.FkCadConsultorio)
-                      Where (M.Pk = " + pkMedico.ToString() + ") and (Mm.Pk is not null) Order by Mm.Pk Desc Limit 2";
+                      Where (M.Pk = " + pkMedico.ToString() + ") and (Mm.Pk is not null) Order by Mm.Pk Limit 2";
         }
-        else if (pkConsultorio != 0)
+        else if (tipo == 3 && pkConsultorio != 0)
         {
           // Retorna médicos por consultório
           comando = @"Select * 
                       From CadMedicos M
                       Join MovMedicos Mm on (Mm.FkCadMedicos = M.Pk)
-                      Where (Mm.FkCadConsultorio = " + pkConsultorio.ToString() + ")";
+                      Where (Mm.FkCadConsultorio = " + pkConsultorio.ToString() + ") and (Mm.Pk is not null) Order by Mm.Pk Limit 2";
         }
       }
 
@@ -218,13 +218,13 @@ namespace GerenciaConsultorios.Classes.MedicoData
     }
 
     // Gerencia em quais consultórios os médicos atendem, regra está toda na procedure
-    public string vincularMedicoConsultorio(int tipo, int pkConsultorio, int pkMedico, int pk)
+    public string vincularMedicoConsultorio(int tipo, int pkConsultorio, int pkMedico)
     {
       DataSet ds = new DataSet();
       string retorno = "";
       string comando;
 
-      comando = "call PcVinculaMedicoConsultorio (" + tipo + " , " + pk + " , " + pkMedico + " , " + pkConsultorio + ")";
+      comando = "call PcVinculaMedicoConsultorio (" + tipo + " , " + pkMedico + " , " + pkConsultorio + ")";
       // Executando comando
       mAdapter = new MySqlDataAdapter(comando, con.connectionStringMySql);
       // Populando o data set

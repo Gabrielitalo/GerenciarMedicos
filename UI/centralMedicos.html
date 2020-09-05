@@ -20,6 +20,7 @@
     <link href="files/css/custom.css" rel="stylesheet">
     <!-- Importando icones -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css">
+
 </head>
 
 <body>
@@ -51,7 +52,7 @@
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-link" onclick="abrirModal('modalEdit');"><i class="fa fa-plus"></i>
                     Adicionar</button>
-                <button type="button" class="btn btn-link"><i class="fa fa-eye"></i> Filtros</button>
+                <!-- <button type="button" class="btn btn-link"><i class="fa fa-eye"></i> Filtros</button> -->
             </div>
         </div>
         <div class="mt-2">
@@ -64,7 +65,7 @@
     </div>
 
     <!-- Modal Editar -->
-    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true" data-backdrop="static"> 
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -94,19 +95,6 @@
                         <input type="number" class="form-control" id="txtVrConsulta"
                             placeholder="Digite aqui o valor da consulta do médico">
                     </div>
-
-                    <!-- <div class="mt-2">
-                        <div class="form-group">
-                            <label class="custom-input-label text-muted" for="txtConsultorio1">Consultório 1</label>
-                            <input type="text" class="form-control" id="txtConsultorio1"
-                                placeholder="Vincular médico a um consultório">
-                        </div>
-                        <div class="form-group">
-                            <label class="custom-input-label text-muted" for="txtConsultorio2">Consultório 2</label>
-                            <input type="text" class="form-control" id="txtConsultorio2"
-                                placeholder="Vincular médico a um consultório">
-                        </div>
-                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" onclick="salvar();">Salvar</button>
@@ -119,7 +107,7 @@
     </div>
 
     <!-- Modal vincular médico-->
-    <div class="modal fade" id="modalVincular" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal fade" id="modalVincular" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -128,7 +116,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body custom-input">
+                <div class="modal-body custom-input" onclick="focar(this);">
                     <div class="mt-2">
                         <div class="form-group">
                             <label class="custom-input-label text-muted" for="txtNomeMedicoVincula" maxlength="100">Nome
@@ -136,30 +124,41 @@
                             <input type="text" class="form-control" id="txtNomeMedicoVincula" disabled>
                         </div>
                         <div class="form-group">
-                            <button for="txtConsultorio1" class="btn btn-sm btn-link custom-input-label text-muted" onclick="excluirVinculo('1');"><i
-                                    class="fa fa-trash"></i> Consultório 1</button>
-                            <input type="text" class="form-control" id="txtConsultorio1"
-                                placeholder="Vincular médico a um consultório" />
-                            <input type="hidden" id="pkConsultorio1" />
+                            <button for="txtConsultorio1" class="btn btn-sm btn-link custom-input-label text-muted"
+                                onclick="excluirVinculo('1');"><i class="fa fa-wrench"></i> Consultório 1</button>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button id="btnSalvarVinculo1" class="btn btn-sm btn-link" onclick="cadastrarVinculo('1');"><i class="fa fa-check"></i> Salvar</button>
+                                </div>
+                                <input autocomplete="off" type="text" class="form-control" id="txtConsultorio1"
+                                    placeholder="Vincular médico a um consultório" disabled
+                                    onblur="autoCompleteCadConsultorios('txtConsultorio1', 'pkConsultorio1', 'resultConsultorio1');" />
+                                <input type="hidden" id="pkConsultorio1" />
+                            </div>
+                            <ul class="list-group autoCompleteCustom" id="resultConsultorio1"></ul>
                         </div>
                         <div class="form-group">
-                            <button for="txtConsultorio2" class="btn btn-sm btn-link custom-input-label text-muted" onclick="excluirVinculo('2');"><i
-                                    class="fa fa-trash"></i> Consultório 2</button>
-                            <input type="text" class="form-control" id="txtConsultorio2"
-                                placeholder="Vincular médico a um consultório">
-                            <input type="hidden" id="pkConsultorio2" />
+                            <button for="txtConsultorio2" class="btn btn-sm btn-link custom-input-label text-muted"
+                                onclick="excluirVinculo('2');"><i class="fa fa-wrench"></i> Consultório 2</button>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button id="btnSalvarVinculo2" class="btn btn-sm btn-link" onclick="cadastrarVinculo('2');"><i class="fa fa-check"></i> Salvar</button>
+                                </div>
+                                <input autocomplete="off" type="text" class="form-control" id="txtConsultorio2"
+                                    placeholder="Vincular médico a um consultório" disabled
+                                    onblur="autoCompleteCadConsultorios('txtConsultorio2', 'pkConsultorio2', 'resultConsultorio2');" />
+                                <input type="hidden" id="pkConsultorio2" />
+                            </div>
+                            <ul class="list-group autoCompleteCustom" id="resultConsultorio2"></ul>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" onclick="salvar();">Salvar</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
                 </div>
 
                 <input type="hidden" id="pkMedicoVincula" />
             </div>
         </div>
     </div>
+
 
     <!-- Bootstrap Framework-->
     <script src="files/vendor/jquery/jquery.min.js"></script>
@@ -173,6 +172,8 @@
     <script src="files/vendor/owl.carousel/owl.carousel.min.js"></script>
 
     <!-- Para essa página -->
+    <!-- auto complete -->
+    <script src="files/js/autoComplete.js"></script>
     <script src="files/js/gerenciarMedicos.js"></script>
 </body>
 

@@ -34,6 +34,8 @@ function limparModal() {
   document.getElementById("txtEndereco").value = "";
   document.getElementById("txtTelefone").value = "";
   document.getElementById("pkConsultorio").value = "";
+
+  document.getElementById("medicoAtende").innerHTML = "";
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // retornar os consultórios
@@ -69,7 +71,7 @@ function apagarConsultorio(pk) {
   $.ajax({
     url: urlAPI + "api/ExluirConsultorio?pkConsultorio=" + pk,
     dataType: "text",
-    method: "POST",
+    method: "DELETE",
     success: function (data) {
       retornaConsultorios();
     }
@@ -94,6 +96,8 @@ function abrirDetalhesConsultorio(pk) {
       document.getElementById("txtEndereco").value = obj[0].Endereco;
       document.getElementById("txtTelefone").value = obj[0].Telefone;
       document.getElementById("pkConsultorio").value = obj[0].Pk;
+      // Busca os médicos vinculados ao consultório
+      buscaMedicosConsultorio(pk);
 
       abrirModal('modalEdit', 'não');
     }
@@ -121,7 +125,7 @@ function alterarConsultorio() {
   }
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------
-// Cadastrar médico
+// Cadastrar consultório
 
 function cadastrarConsultorio() {
   let pk = document.getElementById("pkConsultorio").value;
@@ -129,12 +133,21 @@ function cadastrarConsultorio() {
   let enderecoForm = document.getElementById("txtEndereco").value;
   let telefoneForm = document.getElementById("txtTelefone").value;
 
+  if (!enderecoForm) {
+    alert("Digite o endereço.")
+    return;
+  }
+  if (!telefoneForm) {
+    alert("Digite o telefone.")
+    return;
+  }
   if (!pk) {
     $.ajax({
       url: urlAPI + "api/CadastrarConsultorio?pkConsultorio=" + pk + "&nome=" + nomeForm + "&endereco=" + enderecoForm + "&telefone=" + telefoneForm,
       dataType: "text",
       method: "POST",
       success: function (data) {
+        alert(data);
         retornaConsultorios();
       }
     });
@@ -154,4 +167,39 @@ function salvar() {
   // Está com o toogle
   abrirModal('modalEdit', 'não');
 
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// Verifica quais médicos estão vinculado ao consultório
+
+function buscaMedicosConsultorio(pk) {
+  let medicoAtende = document.getElementById("medicoAtende");
+
+  $.ajax({
+    url: urlAPI + "api/RetornaMedicos",
+    data: {
+      tipo: 3,
+      pkConsultorio: pk
+    },
+    dataType: "text",
+    method: "GET",
+    success: function (data) {
+      var obj = JSON.parse(data);
+      let count = obj.length;
+      let i, html;
+      if (medicoAtende) {
+        html = "";
+        if (count > 0) {
+          for (i = 0; i < count; i++) {
+            html += '<div class="card mb-2"><div class="card-body">';
+            html += '<h6 class="card-title">' + obj[i].Nome + '</h6>';
+            html += '<h6 class="card-subtitle mb-2 text-muted">CRM: ' + obj[i].Crm + '</h6></div></div>';
+          }
+        }
+        else {
+          html += '<h6 class="mt-2 card-subtitle mb-2 text-muted">Nenhum médico vinculado</h6></div></div>';
+        }
+        medicoAtende.innerHTML = html;
+      }
+    }
+  });
 }

@@ -1,23 +1,17 @@
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 -- Versão MSSQL
 
-ALTER PROCEDURE [dbo].[PcVinculaMedicoConsultorio] @Tipo int, @Pk int, @PkMedico int, @PkConsultorio int    
+ALTER PROCEDURE [dbo].[PcVinculaMedicoConsultorio] @Tipo int, @PkMedico int, @PkConsultorio int    
 as     
 
 Declare @Count int
 
-If (@Tipo = 0)
+If (@Tipo = 0) -- Insert
 	Begin
-		If (@Pk = 0)
-			Begin
-				Select @Count = Count(Pk)
-				From MovMedicos
-				Where (FkCadMedicos  = @PkMedico)
-			End
-		Else
-			Begin
-				Set @Count = 0
-			End
+
+		Select @Count = Count(Pk)
+		From MovMedicos
+		Where (FkCadMedicos  = @PkMedico)
 
 		If (@Count = 2)
 			Begin
@@ -26,89 +20,81 @@ If (@Tipo = 0)
 			End
 		Else
 			Begin
-				If (@Pk = 0)
-					Begin
-						Insert Into MovMedicos(FkCadConsultorio, FkCadMedicos) 
-						Select @PkConsultorio, @PkMedico
+				Insert Into MovMedicos(FkCadConsultorio, FkCadMedicos) 
+				Select @PkConsultorio, @PkMedico
 
-						Select 'Médico cadastrado com sucesso.'  as Retorno
-						return
-					End
-				Else
-					Begin
-						Update MovMedicos
-						Set FkCadConsultorio = @PkConsultorio
-						Where (Pk = @Pk)
-
-						Select 'Médico alterado com sucesso.'  as Retorno
-						return
-					End
-
+				Select 'Médico cadastrado com sucesso.'  as Retorno
+				return
 			End
 	End
-Else
+Else If (@Tipo = 1) -- Delete
 	Begin
 		Delete From MovMedicos
-		Where(Pk = @Pk) 
+		Where (FkCadMedicos = @PkMedico) and
+		(FkCadConsultorio = @PkConsultorio)
 
 		Select 'Médico removido com sucesso.'  as Retorno
 		return
 	End
+Else If (@Tipo = 2) -- Update
+	Begin
 
-	-----------------------------------------------------------------------------------------------------------------------------------------------------------
-	-- Versão MySql
+		Update MovMedicos
+		Set FkCadConsultorio = @PkConsultorio
+		Where (FkCadMedicos = @PkMedico) and
+		(FkCadConsultorio = @PkConsultorio)
+
+		Select 'Médico alterado com sucesso.'  as Retorno
+		return
+	End
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+-- Versão MySql
 DELIMITER //
 
-CREATE PROCEDURE PcVinculaMedicoConsultorio ( p_Tipo int, p_Pk int, p_PkMedico int, p_PkConsultorio int)    
+CREATE PROCEDURE PcVinculaMedicoConsultorio ( p_Tipo int, p_PkMedico int, p_PkConsultorio int)    
 sp_lbl:
 begin     
 
 Declare v_Count int;
 
-If (p_Tipo = 0)
+If (p_Tipo = 0) -- Insert
 	Then
-		If (p_Pk = 0)
-			Then
-				Select Count(Pk) Into v_Count
-				From MovMedicos
-				Where (FkCadMedicos  = p_PkMedico);
-		Else
-				Set v_Count = 0;
-			End if;
+
+		Select Count(Pk) Into v_Count
+		From MovMedicos
+		Where (FkCadMedicos  = p_PkMedico);
 
 		If (v_Count = 2)
 			Then
 				Select 'Médico cadastrado em dois consultórios, remova de outro consultório.'  as Retorno;
 				leave sp_lbl;
 		Else
-				If (p_Pk = 0)
-					Then
-						Insert Into MovMedicos(FkCadConsultorio, FkCadMedicos) 
-						Select p_PkConsultorio, p_PkMedico;
+				Insert Into MovMedicos(FkCadConsultorio, FkCadMedicos) 
+				Select p_PkConsultorio, p_PkMedico;
 
-						Select 'Médico cadastrado com sucesso.'  as Retorno;
-						leave sp_lbl;
-				Else
-						Update MovMedicos
-						Set FkCadConsultorio = p_PkConsultorio
-						Where (Pk = p_Pk);
-
-						Select 'Médico alterado com sucesso.'  as Retorno;
-						leave sp_lbl;
-					End if;
-
+				Select 'Médico cadastrado com sucesso.'  as Retorno;
+				leave sp_lbl;
 			End if;
-Else
+Elseif (p_Tipo = 1) -- Delete
+	Then
 		Delete From MovMedicos
-		Where(Pk = p_Pk); 
+		Where (FkCadMedicos = p_PkMedico) and
+		(FkCadConsultorio = p_PkConsultorio);
 
 		Select 'Médico removido com sucesso.'  as Retorno;
 		leave sp_lbl;
-	End if;
+Elseif (p_Tipo = 2) -- Update
+	Then
+		Update MovMedicos
+		Set FkCadConsultorio = p_PkConsultorio
+		Where (FkCadMedicos = p_PkMedico) and
+		(FkCadConsultorio = p_PkConsultorio);
+
+		Select 'Médico alterado com sucesso.'  as Retorno;
+		leave sp_lbl;
+End if;
 END;
 //
 
 DELIMITER ;
-
-
 

@@ -35,6 +35,18 @@ function limparModal() {
     document.getElementById("txtTelefone").value = "";
     document.getElementById("txtVrConsulta").value = "";
     document.getElementById("pkMedico").value = "";
+
+    document.getElementById("txtConsultorio1").value = "";
+    document.getElementById("pkConsultorio1").value = "";
+    document.getElementById("txtConsultorio2").value = "";
+    document.getElementById("pkConsultorio2").value = "";
+    document.getElementById("txtNomeMedicoVincula").value = "";
+    document.getElementById("pkMedicoVincula").value = "";
+
+    document.getElementById("txtConsultorio1").setAttribute("disabled", "");
+    document.getElementById("txtConsultorio2").setAttribute("disabled", "");
+
+
 }
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // retornar os médicos
@@ -62,7 +74,7 @@ function retornaMedicos() {
                 html += '<p class="card-text"><i class="fa fa-certificate"></i> ' + obj[i].Crm + '</p>';
                 html += '<p class="card-text"><i class="fa fa-phone"></i> ' + obj[i].Telefone + '</p>';
                 html += '<p class="card-text"><i class="fa fa-credit-card"></i> ' + obj[i].ValorConsulta + '</p>';
-                html += '<a href="#" class="card-link" onclick="abrirVincularMedico(' + concatenaHtml(obj[i].Pk) + ');"><i class="fa fa-users"></i> Vincular consultório</a></div></div>';
+                html += '<a href="#" class="card-link" onclick="abrirVincularMedico(' + concatenaHtml(obj[i].Pk) + ', ' + concatenaHtml(obj[i].Nome) + ');"><i class="fa fa-users"></i> Vincular consultório</a></div></div>';
 
             }
             liveRow.innerHTML = html;
@@ -138,12 +150,19 @@ function cadastrarMedico() {
     let telefoneForm = document.getElementById("txtTelefone").value;
     let vrConsultaForm = document.getElementById("txtVrConsulta").value;
 
+
+    if (!Crm) {
+        alert("Digite o CRM.");
+        return;
+    }
+
     if (!pk) {
         $.ajax({
             url: urlAPI + "api/CadastrarMedico?pkMedico=" + pk + "&nome=" + nomeForm + "&Crm=" + Crm + "&telefone=" + telefoneForm + "&valorConsulta=" + vrConsultaForm,
             dataType: "text",
             method: "POST",
             success: function (data) {
+                alert(data);
                 retornaMedicos();
             }
         });
@@ -166,7 +185,7 @@ function salvar() {
 //--------------------------------------------------------------------------------------------------------------------------------------------
 // Ver médico consultório
 
-function abrirVincularMedico(pk) {
+function abrirVincularMedico(pk, nome) {
     limparModal();
     $.ajax({
         url: urlAPI + "api/RetornaMedicos",
@@ -179,46 +198,58 @@ function abrirVincularMedico(pk) {
         success: function (data) {
             var obj = JSON.parse(data);
             if (obj.length > 0) {
-                document.getElementById("pkMedicoVincula").value = obj[0].Pk;
 
-                document.getElementById("txtNomeMedicoVincula").value = obj[0].Nome;
                 document.getElementById("txtConsultorio1").value = obj[0].NomeConsultorio;
-                document.getElementById("pkConsultorio1").value = obj[0].PkMovMedico;
+                document.getElementById("pkConsultorio1").value = obj[0].FkCadConsultorio;
 
                 if (obj.length > 1) {
                     document.getElementById("txtConsultorio2").value = obj[1].NomeConsultorio;
-                    document.getElementById("pkConsultorio2").value = obj[1].PkMovMedico;
+                    document.getElementById("pkConsultorio2").value = obj[1].FkCadConsultorio;
                 }
-
-
-                abrirModal('modalVincular', 'não');
             }
+            document.getElementById("txtNomeMedicoVincula").value = nome;
+            document.getElementById("pkMedicoVincula").value = pk;
+
+            abrirModal('modalVincular', 'não');
 
         }
     });
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------
-// Vincular médico consultório
-
-function salvarVinculo() {
-    let pkMovMedico, pkMedico, pkConsultorio;
-
-}
-//--------------------------------------------------------------------------------------------------------------------------------------------
 // cadastar vinculo médico com o consultório
-function cadastrarVinculo(pkMovMedico, pkMedico, pkConsultorio){
+function cadastrarVinculo(v) {
 
-    if(!pkMovMedico){
-        pkMovMedico = 0;
-    }
+    let pkMedico = document.getElementById("pkMedicoVincula").value;
+    let pkConsultorio = document.getElementById("pkConsultorio" + v).value;
 
     if (pkMedico && pkConsultorio) {
         $.ajax({
-            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=0&pk=" + pkMovMedico + "&pkConsultorio=" + pkConsultorio + "&pkMedico=" + pkMedico,
+            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=0&pkConsultorio=" + pkConsultorio + "&pkMedico=" + pkMedico,
             dataType: "text",
             method: "POST",
             success: function (data) {
+                alert(data);
+            }
+        });
+    }
+}
+//--------------------------------------------------------------------------------------------------------------------------------------------
+// alterar vinculo médico com o consultório
+function alterarVinculo(v) {
+
+    let pkMedico = document.getElementById("pkMedicoVincula").value;
+    let pkConsultorio = document.getElementById("pkConsultorio" + v).value;
+
+
+    if (pkMedico && pkConsultorio) {
+        $.ajax({
+            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=2&pkConsultorio=" + pkConsultorio + "&pkMedico=" + pkMedico,
+            dataType: "text",
+            method: "POST",
+            success: function (data) {
+                console.log(data);
+
             }
         });
     }
@@ -228,27 +259,26 @@ function cadastrarVinculo(pkMovMedico, pkMedico, pkConsultorio){
 // Excluir vinculo médico com o consultório
 
 function excluirVinculo(v) {
-    let Pk;
-    let txt;
 
-    if (v === "1") {
-        Pk = document.getElementById("pkConsultorio1")
-        txt = document.getElementById("txtConsultorio1");
-    } else {
-        Pk = document.getElementById("pkConsultorio2");
-        txt = document.getElementById("txtConsultorio2");
-    }
+    let pkMedico = document.getElementById("pkMedicoVincula");
+    let pkConsultorio = document.getElementById("pkConsultorio" + v);
+    let txt = document.getElementById("txtConsultorio" + v);
 
-    if (Pk) {
+    if (pkConsultorio.value && pkMedico.value) {
         $.ajax({
-            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=1&pk=" + Pk.value,
+            url: urlAPI + "api/GerenciarMedicoConsultorio?tipo=1&pkConsultorio=" + pkConsultorio.value + "&pkMedico=" + pkMedico.value,
             dataType: "text",
             method: "POST",
             success: function (data) {
-                Pk.value = "";
+                pkConsultorio.value = "";
                 txt.value = "";
+                txt.removeAttribute("disabled");
             }
         });
+    }
+    else{
+        txt.removeAttribute("disabled");
+        
     }
 
 }

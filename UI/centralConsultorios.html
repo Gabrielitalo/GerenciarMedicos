@@ -53,7 +53,7 @@
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-link" onclick="abrirModal('modalEdit');"><i class="fa fa-plus"></i>
                     Adicionar</button>
-                <button type="button" class="btn btn-link"><i class="fa fa-eye"></i> Filtros</button>
+                <!-- <button type="button" class="btn btn-link"><i class="fa fa-eye"></i> Filtros</button> -->
             </div>
         </div>
         <div class="mt-2">
@@ -65,7 +65,7 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true">
+    <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEdit" aria-hidden="true" data-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,6 +89,9 @@
                         <label class="custom-input-label text-muted" for="txtTelefone">Telefone</label>
                         <input type="text" class="form-control" id="txtTelefone"
                             placeholder="Digite aqui o telefone do consultório">
+                    </div>
+                    <h5 class="modal-title mb-2">Médicos</h5>
+                    <div id="medicoAtende">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -50,3 +50,44 @@ body {
   width: 22rem;
 }
 
+.btn-link {
+  font-weight: 400;
+  color: #11993f;
+  text-decoration: none;
+}
+
+.btn-link:hover {
+  color: #2ac81c;
+  text-decoration: underline;
+}
+
+.btn-link:focus, .btn-link.focus {
+  text-decoration: underline;
+}
+
+.btn-link:disabled, .btn-link.disabled {
+  color: #858796;
+  pointer-events: none;
+}
+
+/* card */
+
+.card-link {
+  font-weight: 400;
+  color: #11993f;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  color: #2ac81c;
+  text-decoration: underline;
+}
+
+.card-link:focus, .card-link.focus {
+  text-decoration: underline;
+}
+
+.card-link:disabled, .card-link.disabled {
+  color: #858796;
+  pointer-events: none;
+}

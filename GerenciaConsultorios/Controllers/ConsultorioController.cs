@@ -68,9 +68,9 @@ namespace GerenciaConsultorios.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [AcceptVerbs("GET")]
     [Route("api/RetornaConsultorios")]
-    public List<Consultorio> retornaConsultorios(int tipo, int pkConsultorio = 0)
+    public List<Consultorio> retornaConsultorios(int tipo, int pkConsultorio = 0, string texto = "")
     {
-      return consultorio.retornarConsultorios(tipo, pkConsultorio);
+      return consultorio.retornarConsultorios(tipo, pkConsultorio, texto);
     }
 
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -137,9 +137,9 @@ namespace GerenciaConsultorios.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     [AcceptVerbs("POST")]
     [Route("api/GerenciarMedicoConsultorio")]
-    public string gerenciarMedicoConsultorio(int tipo, int pkConsultorio = 0, int pkMedico = 0, int pk = 0)
+    public string gerenciarMedicoConsultorio(int tipo, int pkConsultorio = 0, int pkMedico = 0)
     {
-      return medicos.vincularMedicoConsultorio(tipo, pkConsultorio, pkMedico, pk);
+      return medicos.vincularMedicoConsultorio(tipo, pkConsultorio, pkMedico);
     }
     // Fim médicos
     //---------------------------------------------------------------------------------------------------------------------------------------

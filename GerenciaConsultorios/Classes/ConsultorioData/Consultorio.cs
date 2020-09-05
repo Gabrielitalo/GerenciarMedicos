@@ -52,7 +52,7 @@ namespace GerenciaConsultorios.Classes
     }
 
     // Retorna os dados dos consultórios todos ou apenas um
-    public List<Consultorio> retornarConsultorios(int tipo, int pkConsultorio = 0)
+    public List<Consultorio> retornarConsultorios(int tipo, int pkConsultorio = 0, string texto = "")
     {
       List<Consultorio> consultorio = new List<Consultorio>();
       string comando = "";
@@ -61,7 +61,14 @@ namespace GerenciaConsultorios.Classes
       // Todos consultórios
       if (tipo == 0)
       {
+        if (texto == "")
+        {
         comando = @"Select * From CadConsultorio Order by Nome;";
+        }
+        else
+        {
+          comando = @"Select * From CadConsultorio Where (Nome like '%" + texto + "%') Order by Nome Limit 10;";
+        }
       }
       else
       {
