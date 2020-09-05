@@ -103,6 +103,13 @@ Será criado uma API que irá conter os seguintes endpoints, esta deverá ter um
 
 ***Interface com usuário***
 
+Foram utilizadas as seguintes linguagens: 
+
+ **JavaScript**
+ **HTML5**
+ **Bootstrap Framework**
+ **jQuery Framework**
+
 A interface com o usuário irá conter 4 formulários, sendo:
 
  **- Login**
@@ -121,3 +128,13 @@ A interface com o usuário irá conter 4 formulários, sendo:
     cada médico pode existir em no máximo dois consultórios.
     
   Os arquivos estão neste repositório com o nome: **"UI"**
+
+**Implementação futura**
+
+- Será implementando o cadastro de usuários da plataforma, sendo necessário criar apenas a inteface
+do usuário, pois a API já está feita.
+
+- Nos formulários adicionar filtros, porém, será necessário criar uma tabela com o 
+nome de CadUsuariosPreferencia para guardar por form os campos que o usuário selecionou
+dessa forma os filtros estarão sempre aplicados de acordo com a última utilização do
+usuário, podendo continuar de onde parou.
